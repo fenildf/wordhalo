@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
+  get 'welcome/home'
+
+  match '/help', to: 'welcome#help', via: 'get'
+  match '/about', to: 'welcome#about', via: 'get'
+  match '/contact', to: 'welcome#contact', via: 'get'
+  
+  match '/signup', to: 'users#new', via: 'get'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'welcome#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
