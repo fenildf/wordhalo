@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  version: 1
+  title: MyString
+  pronounce: MyString
+  chinese: MyString
+
+two:
+  version: 1
+  title: MyString
+  pronounce: MyString
+  chinese: MyString

@@ -7,3 +7,9 @@
 <p>
     <%= link_to "CSS Ref", "http://getbootstrap.com/2.3.2", class: "btn btn-default" %>
 </p>
+
+<%= form_tag("/query", method: "get") do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Query") %>
+<% end %>
