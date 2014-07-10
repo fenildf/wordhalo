@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709142232) do
+ActiveRecord::Schema.define(version: 20140710024002) do
+
+  create_table "sentences", force: true do |t|
+    t.integer  "word_id"
+    t.integer  "version"
+    t.integer  "index"
+    t.string   "english"
+    t.string   "chinese"
+    t.string   "actual"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -33,5 +44,7 @@ ActiveRecord::Schema.define(version: 20140709142232) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "words", ["title"], name: "index_words_on_title", unique: true
 
 end
