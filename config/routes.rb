@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
 
+  get 'new_words/new'
+
+  get 'new_words/index'
+
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   
   resources :words
+  resources :new_words
 
   get 'welcome/home'
 
@@ -16,6 +21,7 @@ Rails.application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: 'delete'
   
   match '/query', to: 'words#query', via: 'get'
+  match '/new_words/add', to: 'new_words#add', via: 'post'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

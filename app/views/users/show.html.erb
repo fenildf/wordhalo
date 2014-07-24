@@ -1,2 +1,13 @@
 <p><%= @user.name %></p>
 <p><%= @user.email %></p>
+
+<ul>
+<% if @user.new_words.empty? %>
+    <li>Word list is empty.</li>
+<% else %>
+    <% @user.new_words.each_with_index do |new_word, idx| %>
+        <% text = sprintf("%03d - %s", idx, new_word.word.title) %>
+        <li><%= link_to text, new_word.word %></li>
+    <% end %>
+<% end %>
+</ul>

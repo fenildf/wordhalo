@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710024002) do
+ActiveRecord::Schema.define(version: 20140712025902) do
+
+  create_table "cards", force: true do |t|
+    t.date     "schedule"
+    t.integer  "type"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "new_words", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "word_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sentences", force: true do |t|
     t.integer  "word_id"
