@@ -30,8 +30,6 @@ GEM
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
     bcrypt (3.1.7-x64-mingw32)
-    bootstrap-sass (3.2.0.0)
-      sass (~> 3.2)
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -133,7 +131,6 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
-  bootstrap-sass (= 3.2.0.0)
   coffee-rails (~> 4.0.0)
   haml (~> 4.0.0)
   jbuilder (~> 2.0)
