@@ -1,3 +1,5 @@
+require 'json'
+
 class UsersController < ApplicationController
     def new
         @user = User.new
@@ -17,6 +19,14 @@ class UsersController < ApplicationController
         else
             render 'new'
         end
+    end
+    
+    def export
+        @user = self.current_user
+        
+        new_words = @user.new_words.map { |new_word| new_word.word.title }
+        
+        render :json => { new_words: new_words }
     end
     
     private

@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>Wordhalo</title>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
 </head>
 <body>
 	<%= render 'layouts/header' %>
-	<div class="container">
+	<div class="container" style="padding-top: 70px">
         <% flash.each do |key, value| %>
             <div class="alert alert-<%= key %>"><%= value %></div>
         <% end %>
 	    <%= yield %>
         <%= render 'layouts/footer' %>
-        <p></p>
+        <p style="padding-top: 40px"></p>
         <%= debug(params) if Rails.env.development? %>
 	</div>
 </body>
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </html>

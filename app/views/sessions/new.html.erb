@@ -1,18 +1,16 @@
-<h1>Sign in</h1>
+<%= form_for(:session, url: sessions_path, html: { class: "form-signin"} ) do |f| %>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(:session, url: sessions_path) do |f| %>
+  <h2 class="form-signin-heading">Please sign in</h2>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+  <%= f.text_field :email, class: "form-control", placeholder: "Email address", required: true, autofocus: true %>
+  <%= f.password_field :password, class: "form-control", placeholder: "Password", required: true %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-
-      <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
-    <% end %>
-
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+    <span class="pull-right"><%= link_to "Sign Up", signup_path %></span>
   </div>
-</div>
+
+  <%= f.submit "Sign in", class: "btn btn-lg btn-primary btn-block" %>
+<% end %>
