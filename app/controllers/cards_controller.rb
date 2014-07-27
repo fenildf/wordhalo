@@ -10,6 +10,19 @@ class CardsController < ApplicationController
         return redirect_to signin_path if not signed_in?
     end
     
+    def api_get_batch
+        return head(401) if not signed_in? #:unauthorized
+    end
+    
+    def api_get #get
+        return head(401) if not signed_in? #:unauthorized
+        
+        card = current_user.cards.find(params[:id])
+        return head(404) if card == nil
+        
+        render json: card.client_format
+    end
+    
     def api_add_word #post
         return head(401) if not signed_in? #:unauthorized
         word_id = params[:word_id]
@@ -33,7 +46,7 @@ class CardsController < ApplicationController
         id = params[:id]
         schedule = params[:schedule]
         
-        card = Card.find(id)
+        card = current_user.cards.find(id)
         return head(404) if card == nil
         
         card.study_count += 1
@@ -57,7 +70,7 @@ class CardsController < ApplicationController
     def api_delete #delete
         return head(401) if not signed_in? #:unauthorized
         id = params[:id]
-        Card.destroy(id)
+        current_user.cards.destroy(id)
         
         head(200)
     end

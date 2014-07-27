@@ -21,4 +21,11 @@ class WordsController < ApplicationController
       redirect_to @word
     end
   end
+  
+  def api_get #get
+    word = Word.find(params[:id])
+    return head(404) if word == nil
+    
+    render json: word.client_format
+  end
 end

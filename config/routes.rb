@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   
   resources :words, only: [:new, :show]
   match '/search', to: 'words#search', via: 'get'
+  match '/api/words/get', to: 'words#api_get', via: 'get'
   
   resources :new_words, only: [:new, :index]
   match '/new_words/play', to: 'new_words#play', via: 'get'
@@ -24,6 +25,8 @@ Rails.application.routes.draw do
   
   resources :cards, only: [:index]
   match '/cards/play', to: 'cards#play', via: 'get'
+  match '/api/cards/batch', to: 'cards#api_get_batch', via: 'get'
+  match '/api/cards/get', to: 'cards#api_get', via: 'get'
   match '/api/cards/add', to: 'cards#api_add_word', via: 'post'
   match '/api/cards/schedule', to: 'cards#api_new_schedule', via: 'patch'
   match '/api/cards/delete', to: 'cards#api_delete', via: 'delete'
