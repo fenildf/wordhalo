@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   match '/user', to: 'users#home', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/export', to: 'users#export', via: 'get'
-  match '/user/study_new_word', to: 'users#api_study_new_word', via: 'patch'
-  match '/user/study_card', to: 'users#api_study_card', via: 'patch'
+  match '/api/user/study_new_word', to: 'users#api_study_new_word', via: 'patch'
+  match '/api/user/study_card', to: 'users#api_study_card', via: 'patch'
   
   resources :sessions, only: [:new, :create, :destroy]
   match '/signin', to: 'sessions#new', via: 'get'

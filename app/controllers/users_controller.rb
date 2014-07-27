@@ -40,7 +40,9 @@ class UsersController < ApplicationController
         return head(401) if not signed_in? #:unauthorized
         
         current_user.study_new_word_count += 1
-        current_user.save
+        current_user.save validate: false
+        
+        puts current_user.inspect
         
         head(200)
     end
@@ -49,7 +51,7 @@ class UsersController < ApplicationController
         return head(401) if not signed_in? #:unauthorized
         
         current_user.study_card_count += 1
-        current_user.save
+        current_user.save validate: false
         
         head(200)
     end

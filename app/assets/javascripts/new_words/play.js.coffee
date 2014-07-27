@@ -11,6 +11,8 @@ $ ()->
             type: "delete"
             data: { id: new_word_id }
         $.post "/api/cards/add", word_id: word_id
+        $.ajax "/api/user/study_new_word",
+            type: "patch"
         
         idx += 1
         if idx < new_words_count
