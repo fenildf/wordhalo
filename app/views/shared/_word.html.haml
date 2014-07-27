@@ -1,0 +1,20 @@
+.row
+  .col-lg-12
+    .page-header
+      %h1
+        = @word.title
+        %span(style="margin-left: 20px")
+        %small= "[#{@word.pronounce}]"
+
+    .panel.panel-default
+      .panel-body
+        - @word.translation_chinese.each do |k, v|
+          %p
+            %strong= k
+            = v
+      
+    %ul.list-group
+      - @word.sentences.each do |sentence|
+        %li.list-group-item
+          %p= sentence.english
+          %p= sentence.chinese

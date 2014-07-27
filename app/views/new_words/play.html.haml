@@ -1,5 +1,17 @@
-// - @new_words.each_with_index do |new_word, idx|
-//   = 
+%div(style="display: none")
+  %input#new_words_count(type="hidden" value="#{@new_words.count}")
+
+- @new_words.each_with_index do |new_word, idx|
+  - @word = new_word.word
+  %div.hidden(id="new_word_div_#{idx}")
+    .row
+      .col-lg-12
+        %div(style="position: absolute; z-index: 10; top: 4px; right: 10px")
+          .hidden
+            %input(type="hidden" id="new_word_id_#{idx}" value="#{new_word.id}")
+            %input(type="hidden" id="word_id_#{idx}" value="#{@word.id}")
+          %button.btn.btn-primary.btn-next-word(style="width: 200px")= "NEXT (#{@new_words.count-idx})"
+    = render "shared/word"
 
 - content_for :javascript do
   = javascript_include_tag 'new_words/play', 'data-turbolinks-track' => true
