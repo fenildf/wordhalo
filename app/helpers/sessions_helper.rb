@@ -37,7 +37,8 @@ module SessionsHelper
         
         puts ">>>>>>>>>>>>> Query iciba: #{word_title}"
         url = "http://www.iciba.com/#{word_title}"
-        doc = Nokogiri::HTML(open(url))
+        file = open(url)
+        doc = Nokogiri::HTML(file)
         return nil if doc.inner_html.include? 'question unfound_tips'
         
         begin
@@ -72,6 +73,8 @@ module SessionsHelper
             word.sentences.create(version: 1, index: translation_id, english: eng[3..-1], chinese: node2.css("dd").first.content)
           end
         end
+        
+        file.close
           
         return word
     end
