@@ -15,7 +15,10 @@ ActiveRecord::Schema.define(version: 20140712025902) do
 
   create_table "cards", force: true do |t|
     t.date     "schedule"
-    t.integer  "type"
+    t.integer  "study_count"
+    t.boolean  "pending"
+    t.string   "study_type"
+    t.integer  "word_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

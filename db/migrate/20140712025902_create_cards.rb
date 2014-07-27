@@ -2,7 +2,11 @@ class CreateCards < ActiveRecord::Migration
   def change
     create_table :cards do |t|
       t.date :schedule
-      t.integer :type
+      t.integer :study_count
+      t.boolean :pending
+      t.string :study_type
+      
+      t.belongs_to :word
       
       t.belongs_to :user
 

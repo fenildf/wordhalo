@@ -1,6 +1,7 @@
 .row
   .col-lg-4
     - _options = { class: "btn btn-primary btn-block" }
+    = link_to "PLAY", play_path, _options
     = link_to "ADD WORDS", "/new_words/new", _options
     = link_to "EXPORT", "/export", _options
     = link_to "USER INFO", @user, _options

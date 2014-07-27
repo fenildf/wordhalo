@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  match '/help', to: 'welcome#help', via: 'get'
+  match '/play', to: 'welcome#play', via: 'get'
   match '/contact', to: 'welcome#contact', via: 'get'
   match '/about', to: 'welcome#about', via: 'get'
 

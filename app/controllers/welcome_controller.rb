@@ -1,8 +1,9 @@
 class WelcomeController < ApplicationController
-  def home
+  def play
+    return redirect_to signin_path if not signed_in?
   end
 
-  def help
+  def home
   end
 
   def about

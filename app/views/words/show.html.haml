@@ -9,12 +9,13 @@
           = @word.title
           %span(style="margin-left: 20px")
           %small= "[#{@word.pronounce}]"
-  .row
-    .col-lg-12
-      .pull-right
-        = form_tag("/new_words/add", method: "post") do
-          = hidden_field_tag 'word_id', @word.id
-          = submit_tag "ADD", class: "btn btn-primary", style: "margin-bottom: 10px; width: 200px"
+  - if signed_in?
+    .row
+      .col-lg-12
+        .pull-right
+          = form_tag("/new_words/add", method: "post") do
+            = hidden_field_tag 'word_id', @word.id
+            = submit_tag "ADD", class: "btn btn-primary", style: "margin-bottom: 10px; width: 200px"
   
   .panel.panel-default
     .panel-body
