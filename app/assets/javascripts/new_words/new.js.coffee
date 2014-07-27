@@ -1,21 +1,16 @@
 $ () ->
-    $word_title = $("#word_title")
     $add_button = $("#add-button")
     $added_list = $("#added-list")
     
-    getWordTitle = ()->
-        $word_title[0].value
+    $.ajaxSetup headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
     
-    checkAddButtonDisable = ()->
-        $add_button.prop('disabled', getWordTitle().length <= 0)
-        
-    $word_title.keyup (e)->
-        checkAddButtonDisable()
-        
     $add_button.click (e)->
         e.preventDefault()
-        word_title = getWordTitle()
-        $word_title[0].value = ""
+        word_title = $("#word_title")[0].value
+        return if word_title.length <= 0
+        $("#word_title")[0].value = ""
         $label = $('<span class="label label-default pull-right"></span>')
         $label.html("Adding")
         $word = $('<span></span>')
