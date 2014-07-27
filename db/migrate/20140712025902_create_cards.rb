@@ -1,7 +1,7 @@
 class CreateCards < ActiveRecord::Migration
   def change
     create_table :cards do |t|
-      t.date :schedule
+      t.datetime :schedule
       t.integer :study_count
       t.boolean :pending
       t.string :study_type
