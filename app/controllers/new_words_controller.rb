@@ -1,15 +1,41 @@
 class NewWordsController < ApplicationController
 
   def index
-    @new_words = self.current_user.new_words
+    return redirect_to signin_path if not signed_in?
+    @user = self.current_user
+    
   end
   
-  def add
-    word_id = params[:word_id]
+  def new
+    return redirect_to signin_path if not signed_in?
+    @user = self.current_user
+  end
+  
+  def create
+    return redirect_to signin_path if not signed_in?
+    @user = self.current_user
+  end
+  
+  def api_add
+    return head(401) if not signed_in? #:unauthorized
     
-    new_word = self.current_user.new_words.find_or_create_by( word_id: word_id )
-    puts "Hahahah #{new_word.inspect}"
-    redirect_to root_path
-
+    word_id = params[:word_id]
+    word_title = params[:word_title]
+    
+    if word_title != nil
+      word = query(word_title)
+    else
+      word = Word.find_by_id(word_id)
+    end
+    
+    return head(404) if word == nil
+    
+    new_word = current_user.new_words.find_by( word_id: word.id )
+    if new_word == nil
+      new_word = current_user.new_words.create( word_id: word.id )
+      render json: word #:ok
+    else
+      render json: word, status: 208 #:already_reported
+    end
   end
 end

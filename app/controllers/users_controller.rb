@@ -9,6 +9,11 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
     end
     
+    def home
+        return redirect_to signin_path if not signed_in?
+        @user = current_user
+    end
+    
     def create
         @user = User.new(user_params)
         

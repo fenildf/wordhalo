@@ -1,0 +1,11 @@
+.jumbotron
+  .row
+    .col-lg-4.col-lg-offset-4.col-xs-12
+      %form(role="form")
+        %input.form-control#word_title(type="text" name="q" placeholder="Enter an English Word")
+        %button.btn.btn-primary.btn-block#add-button(style="margin-top: 20px" disabled="true") ADD WORD
+
+%ul.list-group#added-list
+
+- content_for :javascript do
+  = javascript_include_tag 'new_words/new', 'data-turbolinks-track' => true
