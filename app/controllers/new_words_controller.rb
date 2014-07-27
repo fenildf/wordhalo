@@ -18,9 +18,11 @@ class NewWordsController < ApplicationController
   
   def play
     return redirect_to signin_path if not signed_in?
+    
+    @new_words = current_user.new_words
   end
   
-  def api_add
+  def api_add #post
     return head(401) if not signed_in? #:unauthorized
     
     word_id = params[:word_id]
@@ -35,11 +37,21 @@ class NewWordsController < ApplicationController
     return head(404) if word == nil
     
     new_word = current_user.new_words.find_by( word_id: word.id )
-    if new_word == nil
-      new_word = current_user.new_words.create( word_id: word.id )
+    card = current_user.cards.find_by( word_id: word.id )
+    if new_word == nil && card == nil
+      current_user.new_words.create( word_id: word.id )
       render json: word #:ok
     else
       render json: word, status: 208 #:already_reported
     end
+  end
+  
+  def api_delete #delete
+    return head(401) if not signed_in? #:unauthorized
+    
+    id = params[:id]
+    current_user.new_words.destroy(id)
+    
+    head(200)
   end
 end

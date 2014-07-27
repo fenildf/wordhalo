@@ -1,0 +1,7 @@
+%ul
+- if @cards.empty?
+  %li Card list is empty.
+- else
+  - @cards.each_with_index do |card, idx|
+    - text = sprintf("%03d - %s", idx+1, card.word.title)
+    %li= link_to text, card.word

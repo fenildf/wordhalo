@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-    has_many :new_words
-    has_many :cards
+    has_many :new_words, dependent: :destroy
+    has_many :cards, dependent: :destroy
     
     before_save { self.email = email.downcase }
     before_create :create_remember_token

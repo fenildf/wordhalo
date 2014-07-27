@@ -3,5 +3,5 @@
     %li Word list is empty.
   - else
     - @user.new_words.each_with_index do |new_word, idx|
-      - text = sprintf("%03d - %s", idx, new_word.word.title)
+      - text = sprintf("%03d - %s", idx+1, new_word.word.title)
       %li= link_to text, new_word.word
