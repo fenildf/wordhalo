@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
 
-  match '/play', to: 'welcome#play', via: 'get'
   match '/contact', to: 'welcome#contact', via: 'get'
   match '/about', to: 'welcome#about', via: 'get'
 
-  resources :users
+  resources :users, only: [:new, :show]
   match '/user', to: 'users#home', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/export', to: 'users#export', via: 'get'
@@ -13,11 +12,14 @@ Rails.application.routes.draw do
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   
-  resources :words
+  resources :words, only: [:new, :show]
   match '/search', to: 'words#search', via: 'get'
   
-  resources :new_words
+  resources :new_words, only: [:new, :index]
+  match '/new_words/play', to: 'new_words#play', via: 'get'
   match '/api/new_words/add', to: 'new_words#api_add', via: 'post'
+  
+  match '/cards/play', to: 'cards#play', via: 'get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

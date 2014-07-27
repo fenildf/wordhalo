@@ -16,6 +16,10 @@ class NewWordsController < ApplicationController
     @user = self.current_user
   end
   
+  def play
+    return redirect_to signin_path if not signed_in?
+  end
+  
   def api_add
     return head(401) if not signed_in? #:unauthorized
     
