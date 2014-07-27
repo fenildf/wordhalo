@@ -1,2 +1,5 @@
-%p= @user.name
-%p= @user.email
+%p= "Name - #{@user.name}"
+%p= "Account - #{@user.email}"
+%p= "Last Study Time - #{@user.last_study_date}"
+%p= "Study Card Count - #{@user.study_card_count}"
+%p= "Study New Word Count - #{@user.study_new_word_count}"

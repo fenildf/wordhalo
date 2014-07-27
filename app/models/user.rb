@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
     
     before_save { self.email = email.downcase }
     before_create :create_remember_token
+    after_find :callback_after_find
     
     validates :name, presence: true, length: { maximum: 50 }
     validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: { case_sensitive: false }
@@ -22,5 +23,13 @@ class User < ActiveRecord::Base
     private
     def create_remember_token
         self.remember_token = User.hash(User.new_remember_token)
+    end
+    
+    def callback_after_find
+        if self.last_study_date == nil or self.last_study_date < Date::today
+            self.last_study_date = Date::today
+            self.study_card_count = 0
+            self.study_new_word_count = 0
+        end
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140712025902) do
+ActiveRecord::Schema.define(version: 20140727062004) do
 
   create_table "cards", force: true do |t|
     t.date     "schedule"
@@ -49,6 +49,9 @@ ActiveRecord::Schema.define(version: 20140712025902) do
     t.datetime "updated_at"
     t.string   "password_digest"
     t.string   "remember_token"
+    t.date     "last_study_date"
+    t.integer  "study_card_count"
+    t.integer  "study_new_word_count"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
