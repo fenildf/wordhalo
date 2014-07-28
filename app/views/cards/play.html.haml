@@ -1,5 +1,5 @@
-.row
-  .col-lg-12
+%div.row
+  %div.col-lg-12.col-xs-12.col-sm-12
     %div.well#section-loading(style="height: 400px")
       %div#spin-anchor(style="position:relative; top:170px; left:50%")
       %div(style="position:relative; top:260px; width:100%")
@@ -22,35 +22,34 @@
         %p#english english
         %p#chinese chinese
     
-    %div.hidden#result-buttons
-      %p
-
-        %button.btn.btn-danger#btn0(style="width:33%")
-          %strong +0
-          %span.hidden-xs.hidden-sm (Q)
-        %button.btn.btn-warning#btn1(style="width:33%")
-          %strong +1
-          %span.hidden-xs.hidden-sm (W)
-        %button.btn.btn-primary#btn2(style="width:33%")
-          %strong +2
-          %span.hidden-xs.hidden-sm (E)
-        
-      %p
-      
-        %button.btn.btn-info#btn3(style="width:33%")
-          %strong +3
-          %span.hidden-xs.hidden-sm (A)
-        %button.btn.btn-success#btn7(style="width:33%")
-          %strong +7
-          %span.hidden-xs.hidden-sm (S)
-        %button.btn.btn-danger#btnD(style="width:33%")
-          %strong DEL
-          %span.hidden-xs.hidden-sm (D)
+%div.row.hidden#result-buttons
+  %div.col-xs-4
+    %button.btn.btn-block.btn-danger#btn0
+      %strong +0
+      %span.visible-xs-block (Q)
+    %button.btn.btn-block.btn-info#btn3
+      %strong +3
+      %span.visible-xs-block (A)
+  %div.col-xs-4
+    %button.btn.btn-block.btn-warning#btn1
+      %strong +1
+      %span.visible-xs-block (W)
+    %button.btn.btn-block.btn-success#btn7
+      %strong +7
+      %span.visible-xs-block (S)
+  %div.col-xs-4
+    %button.btn.btn-block.btn-primary#btn2
+      %strong +2
+      %span.visible-xs-block (E)
+    %button.btn.btn-block.btn-danger#btnD
+      %strong DEL
+      %span.visible-xs-block (D)
   
-    %div.hidden#question-buttons
-      %button.btn.btn-primary.btn-block#btnF
-        SHOW RESULT
-        %span.hidden-xs.hidden-sm (F)
+%div.row.hidden#question-buttons
+  %div.col-xs-12
+    %button.btn.btn-primary.btn-block#btnF
+      SHOW RESULT
+      %span.visible-xs-block (F)
 
 - content_for :javascript do
   = javascript_include_tag 'cards/play', 'data-turbolinks-track' => true

@@ -22,16 +22,11 @@ class UsersController < ApplicationController
         end
     end
     
-    def home
-        return redirect_to signin_path if not signed_in?
-        @user = current_user
-    end
-    
     def export
         return redirect_to signin_path if not signed_in?
         
         new_words = current_user.new_words.map { |new_word| new_word.word.title }
-        cards = current_user.cards.map { |card| card.words.first.title }
+        cards = current_user.cards.map { |card| card.word.title }
         
         render :json => { new_words: new_words, cards: cards }
     end

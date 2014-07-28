@@ -25,4 +25,4 @@ $ ()->
     KEY_CODE_f = 102
     $("body").keypress (e)->
       switch e.which
-        when KEY_CODE_F or KEY_CODE_f then next_word()
+        when KEY_CODE_F, KEY_CODE_f then next_word()

@@ -1,6 +1,33 @@
 .jumbotron
-  .row
-    .col-lg-4.col-lg-offset-4.col-xs-12
-      %form(action="/search" role="form" method="GET")
-        %input.form-control#q(type="text" name="q" placeholder="Enter an English Word")
-        %button.btn.btn-primary.btn-block(type="submit" name="commit" style="margin-top: 20px") Search Word
+  %h1 Hello!
+  %p Welcome to #mituba's English word learning place.
+    
+  - if signed_in?
+    %div.row
+      %div.col-lg-4
+        - _options = { class: "btn btn-default btn-block", style: "text-align: left" }
+        = link_to new_words_play_path, _options do
+          %span PLAY NEW WORDS
+          %span.badge.pull-right= @user.study_new_word_count
+        = link_to cards_play_path, _options do
+          %span PLAY CARDS
+          %span.badge.pull-right= @user.study_card_count
+        = link_to "ADD NEW WORDS", new_new_word_path, _options
+        = link_to new_words_path, _options do
+          %span LIST NEW WORDS
+          %span.badge.pull-right= @user.new_words.count
+        = link_to cards_path, _options do
+          %span LIST CARDS
+          %span.badge.pull-right= @user.cards.count
+        = link_to "EXPORT", export_path, _options
+  - else
+    %div(style="text-align:right")
+      = link_to "Sign Up", signup_path, class:"btn btn-lg btn-primary", style:"width:120px"
+      = link_to "Sign In", signin_path, class:"btn btn-lg btn-primary", style:"width:120px"
+
+.row
+  .col-xs-12
+    %h2 Other Links
+    .list-group
+      %p= link_to "About", about_path, class:"list-group-item"
+      %p= link_to "Contact", contact_path, class:"list-group-item"

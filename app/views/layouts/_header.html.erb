@@ -11,17 +11,40 @@
 		      <%= link_to "WORD HALO", root_path, id: "logo", class: "navbar-brand" %>
         </div>
         <div class="collapse navbar-collapse">
+          <form class="navbar-form navbar-left" role="form" action="/search" method="get">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="Enter an English word">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">Search</button>
+              </span>
+            </div>
+          </form>
           <ul class="nav navbar-nav navbar-right">
       			<% if signed_in? %>
-      			<li class="active"><%= link_to current_user.name.upcase, "/user" %></li>
+      			<li><%= link_to current_user.name.upcase, current_user %></li>
+      			<li class="visible-xs-block">
+      			  <%= link_to new_words_play_path do %>
+                <strong>PLAY NEW WORDS</strong>
+                <span class="badge pull-right"><%= current_user.study_new_word_count %></span>
+              <% end %>
+            </li>
+       			<li class="visible-xs-block">
+      			  <%= link_to cards_play_path do %>
+                <strong>PLAY CARDS</strong>
+                <span class="badge pull-right"><%= current_user.study_card_count %></span>
+              <% end %>
+       			</li>
+            <li class="visible-xs-block">
+              <%= link_to new_new_word_path do %>
+                <strong>ADD NEW WORDS</strong>
+              <% end %>
+            </li>
       			<li><%= link_to "Sign Out", signout_path, method: "delete" %></li>
       			<% else %>
             <li><%= link_to "Sign Up", signup_path %></li>
       			<li><%= link_to "Sign In", signin_path %></li>
       			<% end %>
             <li><%= link_to "CSS Help", 'http://getbootstrap.com/components' %></li>
-            <li><%= link_to "About", about_path %></li>
-            <li><%= link_to "Contact", contact_path %></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

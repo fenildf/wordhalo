@@ -6,11 +6,14 @@
   %div.hidden(id="new_word_div_#{idx}")
     .row
       .col-lg-12
-        %div(style="position: absolute; z-index: 10; top: 4px; right: 10px")
+        %span.badge(style="position: absolute; z-index: 10; left: 20px")= @new_words.count-idx
+        %div(style="position: absolute; z-index: 10; right: 10px")
           .hidden
             %input(type="hidden" id="new_word_id_#{idx}" value="#{new_word.id}")
             %input(type="hidden" id="word_id_#{idx}" value="#{@word.id}")
-          %button.btn.btn-primary.btn-next-word(style="width: 200px")= "NEXT (#{@new_words.count-idx})"
+          %button.btn.btn-primary.btn-next-word(style="width: 200px")
+            %span NEXT
+            %span.visible-xs-block (F)
     = render "shared/word"
 
 - content_for :javascript do
