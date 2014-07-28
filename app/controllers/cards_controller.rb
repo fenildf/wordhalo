@@ -3,7 +3,7 @@ class CardsController < ApplicationController
     def index
         return redirect_to signin_path if not signed_in?
         
-        @cards = current_user.cards
+        @cards = current_user.cards.order("schedule ASC")
     end
     
     def play
@@ -58,17 +58,14 @@ class CardsController < ApplicationController
         return head(404) if card == nil
         
         card.study_count += 1
-        card.schedule = case schedule
-        when 0 then
-            1.hours.from_now
-        when 1 then
-            1.days.from_now
-        when 2 then
-            2.days.from_now
-        when 3 then
-            3.days.from_now
-        when 7 then
-            7.days.from_now
+        card.schedule = case schedule.to_s
+        when "0" then 1.hours.from_now
+        when "1" then 1.days.from_now
+        when "2" then 2.days.from_now
+        when "3" then 3.days.from_now
+        when "7" then 7.days.from_now
+        else
+            raise "Unknown schedule type: #{schedule}"
         end
         card.save
         

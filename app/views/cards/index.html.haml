@@ -1,7 +1,32 @@
-%ul
 - if @cards.empty?
-  %li Card list is empty.
+  %h1 Card list is empty.
 - else
-  - @cards.each_with_index do |card, idx|
-    - text = sprintf("%03d - %s", idx+1, card.word.title)
-    %li= link_to text, card.word
+  - groups = @cards.in_groups_of(20)
+  %ul.nav.nav-tabs(role="tablist")
+    - groups.each_with_index do |group, idx|
+      - active_class = ( idx == 0 ) ? "active" : ""
+      %li(class=active_class)
+        %a(href="#tab#{idx}" role="tab" data-toggle="tab")= idx
+  
+  .tab-content
+    - groups.each_with_index do |group, idx|
+      - active_class = ( idx == 0 ) ? "active" : ""
+      .tab-pane(id="tab#{idx}" class=active_class)
+        %table.table
+          %colgroup
+            %col(style="width:140px")
+            %col(style="width:30px")
+          %thead
+            %tr
+              %th Schedule
+              %th Count
+              %th Type
+              %th Word
+          %tbody
+            - group.each do |card|
+              - if card != nil
+                %tr
+                  %td= card.schedule.to_formatted_s(:short)
+                  %td= card.study_count
+                  %td= study_type_label(card)
+                  %td= card.word.title
