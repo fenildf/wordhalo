@@ -11,8 +11,7 @@ $ ()->
             type: "delete"
             data: { id: new_word_id }
         $.post "/api/cards/add", word_id: word_id
-        $.ajax "/api/user/study_new_word",
-            type: "patch"
+        $.ajax "/api/user/study_new_word", type: "patch"
         
         idx += 1
         if idx < new_words_count
@@ -21,5 +20,9 @@ $ ()->
             window.location = "/user";
     
     $(".btn-next-word").click next_word
+    
+    KEY_CODE_F = 70
+    KEY_CODE_f = 102
     $("body").keypress (e)->
-        if e.which == 100 then next_word()
+      switch e.which
+        when KEY_CODE_F or KEY_CODE_f then next_word()

@@ -1,2 +1,56 @@
+.row
+  .col-lg-12
+    %div.well#section-loading(style="height: 400px")
+      %div#spin-anchor(style="position:relative; top:170px; left:50%")
+      %div(style="position:relative; top:260px; width:100%")
+        %h1(style="text-align: center") LOADING
+    
+    %h2.hidden#section-english
+    
+      %span#title title
+      %span(style="margin-left: 20px")
+      %small 
+        %span [
+        %span#pronounce pronounce
+        %span ]
+
+    %div.panel.panel-default.hidden#section-chinese
+      .panel-body
+      
+    %ul.list-group.hidden#section-sentences
+      %li.list-group-item
+        %p#english english
+        %p#chinese chinese
+    
+    %div.hidden#result-buttons
+      %p
+
+        %button.btn.btn-danger#btn0(style="width:33%")
+          %strong +0
+          %span.hidden-xs.hidden-sm (Q)
+        %button.btn.btn-warning#btn1(style="width:33%")
+          %strong +1
+          %span.hidden-xs.hidden-sm (W)
+        %button.btn.btn-primary#btn2(style="width:33%")
+          %strong +2
+          %span.hidden-xs.hidden-sm (E)
+        
+      %p
+      
+        %button.btn.btn-info#btn3(style="width:33%")
+          %strong +3
+          %span.hidden-xs.hidden-sm (A)
+        %button.btn.btn-success#btn7(style="width:33%")
+          %strong +7
+          %span.hidden-xs.hidden-sm (S)
+        %button.btn.btn-danger#btnD(style="width:33%")
+          %strong DEL
+          %span.hidden-xs.hidden-sm (D)
+  
+    %div.hidden#question-buttons
+      %button.btn.btn-primary.btn-block#btnF
+        SHOW RESULT
+        %span.hidden-xs.hidden-sm (F)
+
 - content_for :javascript do
   = javascript_include_tag 'cards/play', 'data-turbolinks-track' => true

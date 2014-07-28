@@ -12,6 +12,14 @@ class CardsController < ApplicationController
     
     def api_get_batch
         return head(401) if not signed_in? #:unauthorized
+        
+        find_results = current_user.cards.order("schedule ASC").limit(20)
+        if params[:format] == "id"
+            json = find_results.shuffle.map { |card| card.id }
+        else
+            json = find_results.shuffle.map { |card| card.client_format }
+        end
+        render json: json
     end
     
     def api_get #get
@@ -51,15 +59,15 @@ class CardsController < ApplicationController
         
         card.study_count += 1
         card.schedule = case schedule
-        when :today then
+        when 0 then
             1.hours.from_now
-        when :future1 then
+        when 1 then
             1.days.from_now
-        when :future2 then
+        when 2 then
             2.days.from_now
-        when :future3 then
+        when 3 then
             3.days.from_now
-        when :future7 then
+        when 7 then
             7.days.from_now
         end
         card.save
