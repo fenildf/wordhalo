@@ -22,25 +22,28 @@ $ () ->
         $.post "/api/new_words/add",
             word_title: word_title
         .done (data, textStatus, jqXHR ) ->
-                $word.html(data.title)
-                $label.removeClass("label-default")
-                switch jqXHR.status
-                    when 208
-                        $label.addClass("label-info")
-                        $label.html("Exists")
-                    when 200
-                        $label.addClass("label-success")
-                        $label.html("Added")
-                    when 404
-                        $label.addClass("label-warning")
-                        $label.html("Not found")
-                    else
-                        $label.addClass("label-default")
-                        $label.html("#{jqXHR.status} - #{textStatus}")
-        .fail () ->
+            $word.html(data.title)
             $label.removeClass("label-default")
-            $label.addClass("label-danger")
-            $label.html("Failed")
+            switch jqXHR.status
+                when 208
+                    $label.addClass("label-info")
+                    $label.html("Exists")
+                when 200
+                    $label.addClass("label-success")
+                    $label.html("Added")
+                when 404
+                else
+                    $label.addClass("label-default")
+                    $label.html("#{jqXHR.status} - #{textStatus}")
+        .fail (jqXHR, textStatus, errorThrown) ->
+            $label.removeClass("label-default")
+            switch jqXHR.status
+                when 404
+                    $label.addClass("label-warning")
+                    $label.html("Not found")
+                else
+                    $label.addClass("label-danger")
+                    $label.html(errorThrown)
     
 #// <ul class="list-group">
 #//   <li class="list-group-item">
