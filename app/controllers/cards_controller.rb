@@ -13,11 +13,11 @@ class CardsController < ApplicationController
     def api_get_batch
         return head(401) if not signed_in? #:unauthorized
         
-        find_results = current_user.cards.order("schedule ASC").limit(20)
+        find_results = current_user.cards.order("schedule ASC").limit(80).shuffle.take(20)
         if params[:format] == "id"
-            json = find_results.shuffle.map { |card| card.id }
+            json = find_results.map { |card| card.id }
         else
-            json = find_results.shuffle.map { |card| card.client_format }
+            json = find_results.map { |card| card.client_format }
         end
         render json: json
     end

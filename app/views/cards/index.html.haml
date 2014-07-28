@@ -29,4 +29,4 @@
                   %td= card.schedule.to_formatted_s(:short)
                   %td= card.study_count
                   %td= study_type_label(card)
-                  %td= card.word.title
+                  %td= link_to card.word.title, card.word

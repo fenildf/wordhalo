@@ -13,7 +13,7 @@
             %input(type="hidden" id="word_id_#{idx}" value="#{@word.id}")
           %button.btn.btn-primary.btn-next-word(style="width: 200px")
             %span NEXT
-            %span.visible-xs-block (F)
+            %span.hidden-xs (F)
     = render "shared/word"
 
 - content_for :javascript do
