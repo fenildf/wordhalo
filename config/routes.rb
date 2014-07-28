@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   match '/contact', to: 'welcome#contact', via: 'get'
   match '/about', to: 'welcome#about', via: 'get'
 
-  resources :users, only: [:new, :show, :index]
+  resources :users, only: [:new, :show, :create]
   match '/signup', to: 'users#new', via: 'get'
   match '/export', to: 'users#export', via: 'get'
   match '/api/user/study_new_word', to: 'users#api_study_new_word', via: 'patch'
