@@ -1,23 +1,22 @@
 $ ()->
     new_words_count = $("#new_words_count")[0].value
-    idx = 0
-    $("#new_word_div_#{idx}").toggleClass("hidden")
     
     next_word = ()->
-        $("#new_word_div_#{idx}").toggleClass("hidden")
-        new_word_id = $("#new_word_id_#{idx}")[0].value
-        word_id = $("#word_id_#{idx}")[0].value
-        $.ajax "/api/new_words/delete",
-            type: "delete"
-            data: { id: new_word_id }
-        $.post "/api/cards/add", word_id: word_id
-        $.ajax "/api/user/study_new_word", type: "patch"
+        if idx >= 0
+          $("#new_word_div_#{idx}").toggleClass("hidden")
+          new_word_id = $("#new_word_id_#{idx}")[0].value
+          word_id = $("#word_id_#{idx}")[0].value
+          $.ajax "/api/new_words/delete",
+              type: "delete"
+              data: { id: new_word_id }
+          $.post "/api/cards/add", word_id: word_id
+          $.ajax "/api/user/study_new_word", type: "patch"
         
         idx += 1
         if idx < new_words_count
             $("#new_word_div_#{idx}").toggleClass("hidden")
         else
-            window.location = "/user";
+            window.location = cards_play_path;
     
     $(".btn-next-word").click next_word
     
@@ -26,3 +25,5 @@ $ ()->
     $("body").keypress (e)->
       switch e.which
         when KEY_CODE_F, KEY_CODE_f then next_word()
+        
+    next_word()
