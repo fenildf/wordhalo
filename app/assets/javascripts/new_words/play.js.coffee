@@ -1,5 +1,6 @@
 $ ()->
     new_words_count = $("#new_words_count")[0].value
+    idx = -1
     
     next_word = ()->
         if idx >= 0
