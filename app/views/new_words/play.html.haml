@@ -1,5 +1,6 @@
 %div(style="display: none")
   %input#new_words_count(type="hidden" value="#{@new_words.count}")
+  %input#next_page_path(type="hidden" value=cards_play_path)
 
 - @new_words.each_with_index do |new_word, idx|
   - @word = new_word.word
@@ -15,6 +16,10 @@
             %span NEXT
             %span.hidden-xs (F)
     = render "shared/word"
+    
+%div.well.hidden#redirect-banner
+  %h3(style="text-align:center") All words are done
+  %h3(style="text-align:center") Redirecting...
 
 - content_for :javascript do
   = javascript_include_tag 'new_words/play', 'data-turbolinks-track' => true

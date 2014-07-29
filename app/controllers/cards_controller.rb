@@ -58,14 +58,19 @@ class CardsController < ApplicationController
         return head(404) if card == nil
         
         card.study_count += 1
-        card.schedule = case schedule.to_s
-        when "0" then 1.hours.from_now
-        when "1" then 1.days.from_now
-        when "2" then 2.days.from_now
-        when "3" then 3.days.from_now
-        when "7" then 7.days.from_now
+        delay = case schedule.to_s
+        when "0" then 1.hours
+        when "1" then 1.days
+        when "2" then 2.days
+        when "3" then 3.days
+        when "7" then 7.days
         else
             raise "Unknown schedule type: #{schedule}"
+        end
+        if card.schedule < DateTime.now
+            card.schedule = DateTime.now + delay
+        else
+            card.schedule = card.schedule + delay
         end
         card.save
         

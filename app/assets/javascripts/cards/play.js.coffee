@@ -218,7 +218,8 @@ $ ()->
     
     finish: (callback)->
       return if callback == null
-      if @callbacks.length <= 0 then @_invoke()
+      @callbacks.push callback
+      if @count <= 0 then @_invoke()
         
     _invoke: ()->
       for callback in @callbacks
@@ -226,6 +227,7 @@ $ ()->
       @callbacks = []
   
   reqCounter = new RequestCounter()
+  rc = (jqXHR)-> reqCounter.on_request_sent jqXHR
   
   next_word = ()->
     if current_card != null then current_card.hide()
@@ -235,14 +237,14 @@ $ ()->
     if queue.count() < 5 then update_queue()
     if queue.count() <= 0
       reqCounter.finish ()->
-        window.location = "/user";
+        window.location = "/";
     
   updating_queue = false
   shut_down = false
   update_queue = ()->
     return if updating_queue or shut_down
     updating_queue = true
-    jqXHR = $.get '/api/cards/batch', format: "id", (data) =>
+    rc $.get '/api/cards/batch', format: "id", (data) =>
       if data.length <= 0
         shut_down = true
       else
@@ -253,25 +255,31 @@ $ ()->
           card = queue.peek()
           card.fire_on_ready next_word
       updating_queue = false
-    reqCounter.on_request_sent jqXHR
   
   makeResultButtonCallback = (param)->
     return ()->
       return if current_card == null
       return if current_card.visibleStat < 2
       if param < 0
-        jqXHR = $.ajax '/api/cards/delete',
+        rc $.ajax '/api/cards/delete',
           type: "delete"
           data: { id: current_card.id }
       else
-        jqXHR = $.ajax '/api/cards/schedule',
+        rc $.ajax '/api/cards/schedule',
           type: "patch"
           data: { id: current_card.id, schedule: param }
-      reqCounter.on_request_sent jqXHR
-      jqXHR = $.ajax "/api/user/study_card", type: "patch"
-      reqCounter.on_request_sent jqXHR
+      rc $.ajax "/api/user/study_card", type: "patch"
       
       next_word()
+  
+  printDebugInfo = ()->
+    _debugInfo = {}
+    _debugInfo.cards = []
+    for card in queue._q
+      switch card.study_type
+        when "word"
+          _debugInfo.cards.push("word - " + card.word.title)
+    console.log(_debugInfo)
       
   $('#btn0').click makeResultButtonCallback(0)
   $('#btn1').click makeResultButtonCallback(1)
@@ -294,6 +302,7 @@ $ ()->
   KEY_CODE_S = 83
   KEY_CODE_D = 68 
   KEY_CODE_F = 70
+  KEY_CODE_DEBUG = 63 # '?'
   $("body").keypress (e)->
     switch e.which
       when KEY_CODE_Q , KEY_CODE_q then $('#btn0').click()
@@ -303,6 +312,7 @@ $ ()->
       when KEY_CODE_S , KEY_CODE_s then $('#btn7').click()
       when KEY_CODE_D , KEY_CODE_d then $('#btnD').click()
       when KEY_CODE_F , KEY_CODE_f then $('#btnF').click()
+      when KEY_CODE_DEBUG then printDebugInfo()
       else
         console.log(e.which)
   
