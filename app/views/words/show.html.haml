@@ -4,8 +4,17 @@
   - if signed_in?
     .row
       .col-lg-12
-        %div(style="position: absolute; top: 4px; right: 10px")
-          = form_tag("/new_words/add", method: "post") do
-            = hidden_field_tag 'word_id', @word.id
-            = submit_tag "ADD", class: "btn btn-primary", style: "margin-bottom: 10px; width: 200px"
+        %div(style="position: absolute; top: 4px; right: 10px; z-index: 1")
+          -# = form_tag("/new_words/add", method: "post") do
+            -# = hidden_field_tag 'word_id', @word.id
+            -# = submit_tag "ADD", class: "btn btn-primary", style: "margin-bottom: 10px; width: 200px"
+          %form(role="form")
+            %input#word_id(type="hidden" name="word_id" value="#{@word.id}")
+            - if @added
+              %button.btn.btn-info.btn-block#add-button(disabled style="margin-bottom: 10px; width: 200px") EXISTS
+            - else
+              %button.btn.btn-primary.btn-block#add-button(style="margin-bottom: 10px; width: 200px") ADD
   = render "shared/word"
+
+- content_for :javascript do
+  = javascript_include_tag 'words/show', 'data-turbolinks-track' => true

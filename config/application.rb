@@ -10,7 +10,7 @@ module Wordhalo
   class Application < Rails::Application
     
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-    config.assets.precompile += %w(new_words/new.js new_words/play.js cards/play.js)
+    config.assets.precompile += %w(new_words/new.js new_words/play.js cards/play.js words/show.js)
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

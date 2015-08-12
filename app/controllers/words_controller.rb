@@ -4,6 +4,17 @@ class WordsController < ApplicationController
   
   def show
     @word = Word.find(params[:id])
+    
+    @added = false
+    if signed_in?
+      new_word = current_user.new_words.find_by( word_id: @word.id )
+      card = current_user.cards.find_by( word_id: @word.id )
+      if new_word == nil && card == nil
+        @added = false
+      else
+        @added = true
+      end
+    end
   end
 
   def new
