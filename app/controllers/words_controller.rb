@@ -25,11 +25,15 @@ class WordsController < ApplicationController
   
   def search
     word_title = params[:q]
-    @word = query(word_title)
-    if @word.version < 0
+    if word_title.length == 0
       redirect_to root_path
     else
-      redirect_to @word
+      @word = query(word_title)
+      if @word.version < 0
+        redirect_to root_path
+      else
+        redirect_to @word
+      end
     end
   end
   
