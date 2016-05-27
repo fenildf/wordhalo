@@ -37,45 +37,50 @@ module SessionsHelper
         
         puts ">>>>>>>>>>>>> Query iciba: #{word_title}"
         url = "http://www.iciba.com/#{word_title}"
-        file = open(url)
+        begin
+          file = open(url)
+        rescue OpenURI::HTTPError => ex
+          puts ex
+          return nil
+        end
         doc = Nokogiri::HTML(file)
-        return nil if doc.inner_html.include? 'question unfound_tips'
+        return nil unless doc.inner_html.include? 'keyword'
         
         begin
-          node = doc.css("div.title span h1").first
+          node = doc.css("h1.keyword").first
           word.title = node.content
+          puts word.title
         end
         
         word2 = Word.find_by(title: word.title)
         return word2 if word2 != nil
         
         begin
-          node = doc.css("div.prons span").last
-          node = node.css("strong:nth-child(2)").first
+          node = doc.css("div.base-speak span").last
+          #node = node.css("strong:nth-child(2)").first
           word.pronounce = node.content if node != nil
         end
         begin
           translation_chinese = {} 
-          doc.css("div.group_prons div.group_pos p").each do |node1|
-            a1 = node1.css("strong").first.content
-            a2 = ""
-            node1.css("span label").each do |node2|
-              a2 = a2 + node2.content
-            end
+          doc.css("div.in-base ul.base-list.switch_part").first.xpath("li").each do |node1|
+            a1 = node1.xpath("span").first.content
+            a2 = node1.xpath("p").first.content.strip.delete(' ')
             translation_chinese[a1] = a2
           end
           word.translation_chinese = translation_chinese
         end
         if word.save
-          doc.css("dl.vDef_list").each do |node2|
-            eng = node2.css("dt").first.content.strip
-            translation_id = Integer(eng.split('.').first)
-            word.sentences.create(version: 1, index: translation_id, english: eng[3..-1], chinese: node2.css("dd").first.content)
+          doc.css("div.article-section").first.css("div.section-p").each do |node2|
+            translation_id = node2.css("span.p-order").first.content.delete('.').strip
+            eng = node2.css("p.p-english").first.content.strip
+            chn = node2.css("p.p-chinese").first.content.strip
+            word.sentences.create(version: 1, index: translation_id, english: eng, chinese: chn)
           end
         end
         
         file.close
           
+          puts word
         return word
     end
 end

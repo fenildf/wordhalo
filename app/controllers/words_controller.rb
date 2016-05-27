@@ -29,7 +29,7 @@ class WordsController < ApplicationController
       redirect_to root_path
     else
       @word = query(word_title)
-      if @word.version < 0
+      if @word == nil || @word.version < 0
         redirect_to root_path
       else
         redirect_to @word
