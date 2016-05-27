@@ -29,6 +29,7 @@ module SessionsHelper
     end
     
     def query(word_title)
+        word_title = word_title.downcase
         word = Word.find_by(title: word_title)
         return word if word != nil
         
