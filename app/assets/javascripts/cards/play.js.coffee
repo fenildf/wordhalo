@@ -23,7 +23,7 @@ $ ()->
   createSpin()
   
   randInt = (number)-> Math.floor Math.random()*number
-  randItem = (array)-> array[randInt array.length]
+  randItem = (array)-> if array == null or array.length <= 0 then null else array[randInt array.length]
   
   class Word
     @_dic: {}
@@ -38,7 +38,6 @@ $ ()->
       @pronounce = null
       @translation_chinese = null
       @sentences = null
-      @download()
       @_fire_on_ready = null
       
     is_ready: ()-> @title != null
@@ -66,7 +65,6 @@ $ ()->
       @study_type = json.study_type
       @word_id = json.word_id
       @word = null
-      @_fire_on_ready = null
       @visibleStat = 0
       @download()
     
@@ -74,16 +72,6 @@ $ ()->
     
     download: ()->
       @word = Word.get(@word_id)
-      @word.fire_on_ready ()=>
-        callback = @_fire_on_ready
-        if callback != null then callback()
-    
-    fire_on_ready: (callback)->
-      return if callback == null
-      if @is_ready() and @word.is_ready()
-        callback()
-      else
-        @_fire_on_ready = callback
     
     show: ()->
       if @visibleStat == 0
@@ -118,14 +106,15 @@ $ ()->
         $translation_container.append $c
         @$translations_chinese.push $c
         
-      sentence = randItem @word.sentences
-      @$english.html(sentence.chinese)
-      @$chinese.html(sentence.english)
+      if @word.sentences.length > 0
+        sentence = randItem @word.sentences
+        @$english.html(sentence.chinese)
+        @$chinese.html(sentence.english)
 
     showWord1: ()->
       @visibleStat = 1
       
-      $("#section-loading").remove()
+      $("#section-loading").hide()
     
       maxRand = 1
       maxRand = 2 if @study_count > 3
@@ -184,6 +173,7 @@ $ ()->
   class CardQueue
     constructor: ()->
       @_q = []
+      @_fire_on_ready = null
       
     count: ()-> @_q.length
       
@@ -200,6 +190,30 @@ $ ()->
       for card in @_q
         if card.id == card_id then return true
       return false
+    
+    fire_on_ready: (callback)->
+      return if callback == null
+      @_fire_on_ready = callback
+    
+    get_first_unfinished_card: ()->
+      for card, index in @_q
+        if !card.word.is_ready()
+          return [card, index]
+      return [null, -1]
+    
+    download_more: ()->
+      [card, index] = @get_first_unfinished_card()
+      return if index < 0 || index > 4
+      word = card.word
+      if !word.is_ready()
+        @downloading_word = word
+        word.download()
+        word.fire_on_ready ()=>
+          if word == @downloading_word
+            @download_more()
+          if word == @_q[0].word
+            if @_fire_on_ready != null
+              @_fire_on_ready()
   
   queue = new CardQueue()
   
@@ -210,10 +224,10 @@ $ ()->
       
     on_request_sent: (jqXHR)->
       @count += 1
-      console.log("Push request " + @count)
+      #onsole.log("Push request " + @count)
       jqXHR.always ()=>
         @count -= 1
-        console.log("Pop request " +@count)
+        #onsole.log("Pop request " +@count)
         if @callbacks.length <= 0 then @_invoke()
     
     finish: (callback)->
@@ -232,7 +246,13 @@ $ ()->
   next_word = ()->
     if current_card != null then current_card.hide()
     current_card = queue.pop_front()
-    if current_card != null then current_card.show()
+    if current_card != null
+      queue.download_more()
+      if current_card.word.is_ready()
+        current_card.show()
+      else
+        $("#section-loading").show()
+        current_card = null
     
     if queue.count() < 5 then update_queue()
     if queue.count() <= 0
@@ -249,12 +269,12 @@ $ ()->
         shut_down = true
       else
         for card_json in data
-          console.log(card_json)
           if !queue.contains(card_json.id)
             queue.push_back(new Card(card_json))
-        if current_card == null
-          card = queue.peek()
-          card.fire_on_ready next_word
+        queue.download_more()
+        queue.fire_on_ready ()->
+          if current_card == null
+            next_word()
       updating_queue = false
   
   makeResultButtonCallback = (param)->
