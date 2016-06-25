@@ -247,7 +247,6 @@ $ ()->
     if current_card != null then current_card.hide()
     current_card = queue.pop_front()
     if current_card != null
-      queue.download_more()
       if current_card.word.is_ready()
         current_card.show()
       else
@@ -308,7 +307,9 @@ $ ()->
   $('#btn3').click makeResultButtonCallback(3)
   $('#btn7').click makeResultButtonCallback(7)
   $('#btnD').click makeResultButtonCallback(-1)
-  $('#btnF').click ()-> current_card.show()
+  $('#btnF').click ()->
+    current_card.show()
+    queue.download_more()
   KEY_CODE_q = 113
   KEY_CODE_w = 119
   KEY_CODE_e = 101
