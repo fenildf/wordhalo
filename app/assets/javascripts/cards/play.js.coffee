@@ -60,23 +60,23 @@ $ ()->
         @_fire_on_ready = callback
 
   class Card
-    constructor: (card_id)->
-      @id = card_id
-      @study_count = null
-      @study_type = null
+    constructor: (json)->
+      @id = json.id
+      @study_count = json.study_count
+      @study_type = json.study_type
+      @word_id = json.word_id
       @word = null
-      @download()
       @_fire_on_ready = null
       @visibleStat = 0
+      @download()
     
     is_ready: ()-> @study_type != null
     
     download: ()->
-      $.get '/api/cards/get', id: @id, (data) =>
-        @study_count = data.study_count
-        @study_type = data.study_type
-        @word = Word.get(data.word_id)
-        @word.fire_on_ready(@_fire_on_ready)
+      @word = Word.get(@word_id)
+      @word.fire_on_ready ()=>
+        callback = @_fire_on_ready
+        if callback != null then callback()
     
     fire_on_ready: (callback)->
       return if callback == null
@@ -244,13 +244,14 @@ $ ()->
   update_queue = ()->
     return if updating_queue or shut_down
     updating_queue = true
-    rc $.get '/api/cards/batch', format: "id", (data) =>
+    rc $.get '/api/cards/batch', format: "full", (data) =>
       if data.length <= 0
         shut_down = true
       else
-        for card_id in data
-          if !queue.contains(card_id)
-            queue.push_back(new Card(card_id))
+        for card_json in data
+          console.log(card_json)
+          if !queue.contains(card_json.id)
+            queue.push_back(new Card(card_json))
         if current_card == null
           card = queue.peek()
           card.fire_on_ready next_word
