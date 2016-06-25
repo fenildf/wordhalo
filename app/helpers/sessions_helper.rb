@@ -71,7 +71,7 @@ module SessionsHelper
           word.translation_chinese = translation_chinese
         end
         if word.save
-          doc.css("div.article-section").first.css("div.section-p").each do |node2|
+          doc.css("div.info-article.article-tab div.article div.article-section").first.css("div.section-p").each do |node2|
             translation_id = node2.css("span.p-order").first.content.delete('.').strip
             eng = node2.css("p.p-english").first.content.strip
             chn = node2.css("p.p-chinese").first.content.strip
