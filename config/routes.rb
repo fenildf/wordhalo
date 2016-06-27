@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   
   resources :words, only: [:new, :show]
   match '/search', to: 'words#search', via: 'get'
+  match '/update_content', to: 'words#update_content', via: 'get'
   match '/api/words/get', to: 'words#api_get', via: 'get'
   
   resources :new_words, only: [:new, :index]

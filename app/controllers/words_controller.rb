@@ -37,6 +37,12 @@ class WordsController < ApplicationController
     end
   end
   
+  def update_content
+    @word = Word.find(params[:word_id])
+    @word.fetch_content @word.title
+    redirect_to @word
+  end
+  
   def api_get #get
     word = Word.find(params[:id])
     return head(404) if word == nil

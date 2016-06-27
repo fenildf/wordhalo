@@ -8,8 +8,9 @@
           -# = form_tag("/new_words/add", method: "post") do
             -# = hidden_field_tag 'word_id', @word.id
             -# = submit_tag "ADD", class: "btn btn-primary", style: "margin-bottom: 10px; width: 200px"
-          %form(role="form")
+          %form(role="form" action="/update_content")
             %input#word_id(type="hidden" name="word_id" value="#{@word.id}")
+            %input.btn.btn-primary.btn-block#update-button(type="submit" style="margin-buttom: 10px; width: 200px" value="UPDATE")
             - if @added
               %button.btn.btn-info.btn-block#add-button(disabled style="margin-bottom: 10px; width: 200px") EXISTS
             - else
