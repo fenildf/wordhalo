@@ -37,7 +37,8 @@ module SessionsHelper
         word.version = 1
         
         puts ">>>>>>>>>>>>> Query iciba: #{word_title}"
-        url = "http://www.iciba.com/#{word_title}"
+        url = URI.encode("http://www.iciba.com/#{word_title}")
+        puts url
         begin
           file = open(url)
         rescue OpenURI::HTTPError => ex
