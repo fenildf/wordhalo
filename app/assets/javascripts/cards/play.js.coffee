@@ -145,7 +145,8 @@ $ ()->
       @$section_chinese.removeClass("hidden")
       for $translation_chinese in @$translations_chinese
         $translation_chinese.removeClass("hidden")
-      @$section_sentences.removeClass("hidden")
+      if @word.sentences.length > 0
+        @$section_sentences.removeClass("hidden")
       @$english.removeClass("hidden")
       @$chinese.removeClass("hidden")
 
