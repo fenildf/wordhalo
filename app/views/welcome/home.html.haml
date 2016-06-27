@@ -18,7 +18,7 @@
           %span.badge.pull-right= @user.new_words.count
         = link_to cards_path, _options do
           %span LIST CARDS
-          %span.badge.pull-right= @user.cards.count
+          %span.badge.pull-right= "#{today_cards_count}/#{total_cards_count}"
         = link_to "EXPORT", export_path, _options
   - else
     %div(style="text-align:right")
