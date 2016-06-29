@@ -304,9 +304,9 @@ $ ()->
       
   $('#btn0').click makeResultButtonCallback(0)
   $('#btn1').click makeResultButtonCallback(1)
-  $('#btn2').click makeResultButtonCallback(2)
-  $('#btn3').click makeResultButtonCallback(3)
-  $('#btn7').click makeResultButtonCallback(7)
+  $('#btn2').click makeResultButtonCallback(3)
+  $('#btn3').click makeResultButtonCallback(7)
+  $('#btn7').click makeResultButtonCallback(20)
   $('#btnD').click makeResultButtonCallback(-1)
   $('#btnF').click ()->
     current_card.show()
