@@ -58,9 +58,10 @@ class CardsController < ApplicationController
         return head(404) if card == nil
         
         card.study_count += 1
-        delay = 1.hours
         schedule_number = schedule.to_i
-        if schedule_number > 0 then
+        if schedule_number == 0 then
+            delay = 1.hours
+        elsif schedule_number > 0 then
             delay = schedule_number.days
         else
             raise "Unknown schedule type: #{schedule}"
