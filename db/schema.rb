@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140727062004) do
+ActiveRecord::Schema.define(version: 20160701045646) do
 
   create_table "cards", force: true do |t|
     t.datetime "schedule"
-    t.boolean  "pending"
     t.integer  "study_count"
+    t.boolean  "pending"
     t.string   "study_type"
     t.integer  "word_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "study_trace"
+    t.integer  "study_state"
   end
 
   create_table "new_words", force: true do |t|

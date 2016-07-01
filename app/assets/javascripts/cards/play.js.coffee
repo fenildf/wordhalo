@@ -63,10 +63,18 @@ $ ()->
       @id = json.id
       @study_count = json.study_count
       @study_type = json.study_type
+      @study_trace = json.study_trace
       @word_id = json.word_id
       @word = null
       @visibleStat = 0
       @download()
+      switch @study_trace
+        when "0" then @study_trace_css = "label-danger"
+        when "1" then @study_trace_css = "label-warning"
+        when "3" then @study_trace_css = "label-primary"
+        when "7" then @study_trace_css = "label-info"
+        when "20" then @study_trace_css = "label-success"
+        else @study_trace_css = "label-default"
     
     is_ready: ()-> @study_type != null
     
@@ -95,9 +103,12 @@ $ ()->
       @$pronounce = $("#pronounce")
       @$english = $("#english")
       @$chinese = $("#chinese")
+      @$study_trace = $("#study_trace")
       
       @$title.html(@word.title)
       @$pronounce.html(@word.pronounce)
+      @$study_trace.html(@study_trace)
+      @$study_trace.addClass(@study_trace_css)
       
       @$translations_chinese = []
       $translation_container = $("#section-chinese .panel-body")
@@ -141,6 +152,8 @@ $ ()->
     showWord2: ()->
       @visibleStat = 2
 
+      @$study_trace.removeClass("hidden")
+      
       @$section_english.removeClass("hidden")
       @$section_chinese.removeClass("hidden")
       for $translation_chinese in @$translations_chinese
@@ -156,6 +169,9 @@ $ ()->
     hide: ()->
       @visibleStat = 0
 
+      @$study_trace.addClass("hidden")
+      @$study_trace.removeClass(@study_trace_css)
+      
       @$section_english.addClass("hidden")
       @$section_chinese.addClass("hidden")
       @$section_sentences.addClass("hidden")

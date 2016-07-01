@@ -66,6 +66,7 @@ class CardsController < ApplicationController
         else
             raise "Unknown schedule type: #{schedule}"
         end
+        card.study_trace = schedule
         if card.schedule < DateTime.now
             card.schedule = DateTime.now + delay
         else

@@ -6,6 +6,7 @@ class Card < ActiveRecord::Base
          {  id: self.id,
             study_type: self.study_type ,
             study_count: self.study_count ,
+            study_trace: self.study_trace ,
             word_id: self.word_id }
     end
 end
