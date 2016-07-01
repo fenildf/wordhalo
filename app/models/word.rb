@@ -41,7 +41,7 @@ class Word < ActiveRecord::Base
         end
         
         word2 = Word.find_by(title: word.title)
-        return word2 if word2 != nil
+        return word2 if word2 != nil and word2.id != word.id
         
         begin
           node = doc.css("div.base-speak span").last
@@ -57,6 +57,7 @@ class Word < ActiveRecord::Base
           word.translation_chinese = translation_chinese
         end
         if word.save
+          word.sentences.destroy_all
           doc.css("div.info-article.article-tab div.article div.article-section").first.css("div.section-p").each do |node2|
             translation_id = node2.css("span.p-order").first.content.delete('.').strip
             eng = node2.css("p.p-english").first.content.strip
