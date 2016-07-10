@@ -61,6 +61,10 @@ class CardsController < ApplicationController
         schedule_number = schedule.to_i
         if schedule_number == 0 then
             delay = 1.hours
+        elsif schedule_number == 7 then
+            delay = rand(6..8).days
+        elsif schedule_number == 20 then
+            delay = rand(18..22).days
         elsif schedule_number > 0 then
             delay = schedule_number.days
         else
