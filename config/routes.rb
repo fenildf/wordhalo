@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   
   resources :new_words, only: [:new, :index]
   match '/new_words/play', to: 'new_words#play', via: 'get'
+  match '/new_words/delete', to: 'new_words#delete', via: 'delete'
   match '/api/new_words/add', to: 'new_words#api_add', via: 'post'
   match '/api/new_words/delete', to: 'new_words#api_delete', via: 'delete'
   

@@ -22,6 +22,13 @@ class NewWordsController < ApplicationController
     @new_words = current_user.new_words
   end
   
+  def delete
+    return redirect_to signin_path if not signed_in?
+    id = params[:id]
+    current_user.new_words.destroy(id)
+    redirect_to new_words_path
+  end
+  
   def api_add #post
     return head(401) if not signed_in? #:unauthorized
     

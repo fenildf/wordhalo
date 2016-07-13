@@ -3,5 +3,9 @@
     %li Word list is empty.
   - else
     - @user.new_words.each_with_index do |new_word, idx|
-      - text = sprintf("%03d - %s", idx+1, new_word.word.title)
-      %li= link_to text, new_word.word
+      - if new_word.word == nil then
+        - text = sprintf("%03d - %s", idx+1, 'error word (click to delete)')
+        %li= link_to text, { action: "delete", id: new_word.id }, method: :delete
+      - else
+        - text = sprintf("%03d - %s", idx+1, new_word.word.title)
+        %li= link_to text, new_word.word
