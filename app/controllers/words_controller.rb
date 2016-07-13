@@ -32,6 +32,7 @@ class WordsController < ApplicationController
       if @word == nil || @word.version < 0
         redirect_to root_path
       else
+        puts @word.inspect
         redirect_to @word
       end
     end
@@ -39,7 +40,7 @@ class WordsController < ApplicationController
   
   def update_content
     @word = Word.find(params[:word_id])
-    @word.fetch_content @word.title
+    @word = Word.fetch_content @word
     redirect_to @word
   end
   

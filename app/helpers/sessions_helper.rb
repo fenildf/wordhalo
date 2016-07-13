@@ -30,9 +30,11 @@ module SessionsHelper
         word = Word.find_by(title: word_title)
         return word if word != nil
         
-        word = Word.new
-        word.version = 1
-        word.fetch_content(word_title)
+        word = Word.new do |w|
+            w.title = word_title
+            w.version = 1
+        end
+        word = Word.fetch_content(word)
           
         return word
     end
