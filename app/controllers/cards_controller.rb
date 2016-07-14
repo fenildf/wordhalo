@@ -62,11 +62,11 @@ class CardsController < ApplicationController
         if schedule_number == 0 then
             delay = 1.hours
         elsif schedule_number == 7 then
-            delay = rand(6..8).days
+            delay = rand(6..8).days - 10.hours
         elsif schedule_number == 20 then
-            delay = rand(18..22).days
+            delay = rand(18..22).days - 10.hours
         elsif schedule_number > 0 then
-            delay = schedule_number.days
+            delay = schedule_number.days - 10.hours
         else
             raise "Unknown schedule type: #{schedule}"
         end
