@@ -71,11 +71,12 @@ class CardsController < ApplicationController
             raise "Unknown schedule type: #{schedule}"
         end
         card.study_trace = schedule
-        if card.schedule < DateTime.now
-            card.schedule = DateTime.now + delay
-        else
-            card.schedule = card.schedule + delay
-        end
+        card.schedule = DateTime.now + delay
+        # if card.schedule < DateTime.now
+        #     card.schedule = DateTime.now + delay
+        # else
+        #     card.schedule = card.schedule + delay
+        # end
         card.save
         
         render json: card
