@@ -18,9 +18,9 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'haml', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '3.1.1'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '2.2.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -41,12 +41,13 @@ gem 'bcrypt', '~> 3.1.7'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
-gem 'redis-rails'
+gem 'redis', '3.3.0'
+gem 'redis-rails', '4.0.0'
 
 group :production do
-    gem 'pg'
+    gem 'pg', '~> 0.17.1'
     gem 'rails_12factor'
 end
 
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.6.2.1'
 gem 'sprockets', '2.11.0'
