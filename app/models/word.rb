@@ -86,7 +86,7 @@ class Word < ActiveRecord::Base
     def self.fetch_content(word)
         word_title = word.title.downcase
         
-        uri = URI.parse("http://www.iciba.com/index.php?a=getWordMean&c=search&word=#{word_title}")
+        uri = URI.parse("http://www.iciba.com/index.php?a=getWordMean&c=search&list=1%2C8&word=#{word_title}")
         puts ">>>>>>>>>>>>> Query iciba: #{uri.request_uri}"
   
         http = Net::HTTP.new(uri.host, uri.port)
