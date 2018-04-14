@@ -101,24 +101,36 @@ class Word < ActiveRecord::Base
         word2 = Word.find_by(title: word.title)
         return word2 if word2 != nil and word2.id != word.id
         
-        json_symbols = json_baseInfo["symbols"][0]
-        word.pronounce = "[ " + json_symbols["ph_am"] + " ]"
-        
-        begin
-            translation_chinese = {} 
-            json_symbols["parts"].each do |item|
-            translation_chinese[item["part"]] = item["means"].join ';'
-            end
-            word.translation_chinese = translation_chinese
+        json_symbols = json_baseInfo["symbols"]
+        if json_symbols != nil
+            json_symbols = json_symbols[0]
         end
         
+        word.pronounce = "[ ]"
+        translation_chinese = {}
+        if json_symbols != nil
+            if json_symbols["ph_am"] != nil
+                word.pronounce = "[ " + json_symbols["ph_am"] + " ]"
+            end
+            if json_symbols["parts"] != nil
+                json_symbols["parts"].each do |item|
+                    translation_chinese[item["part"]] = item["means"].join ';'
+                end
+            end
+        elsif json_baseInfo["translate_result"] != nil
+            translation_chinese["cn"] = json_baseInfo["translate_result"]
+        end
+        word.translation_chinese = translation_chinese
+        
         if word.save
-            word.sentences.destroy_all
             json_sentence = json["sentence"]
-            json_sentence.each_with_index do |item, index|
-                eng = item["Network_en"]
-                chn = item["Network_cn"]
-                word.sentences.create(version: 1, index: (index+1), english: eng, chinese: chn)
+            if json_sentence != nil
+                word.sentences.destroy_all
+                json_sentence.each_with_index do |item, index|
+                    eng = item["Network_en"]
+                    chn = item["Network_cn"]
+                    word.sentences.create(version: 1, index: (index+1), english: eng, chinese: chn)
+                end
             end
         else
             return nil
