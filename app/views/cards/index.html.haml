@@ -26,7 +26,7 @@
             - group.each do |card|
               - if card != nil
                 %tr
-                  %td= card.schedule.strftime('%b %e %H:%M')
+                  %td= card.schedule.strftime('%y %b %e %H:%M')
                   %td= card.study_count
                   %td= study_type_label(card)
                   %td= link_to card.word.title, card.word
