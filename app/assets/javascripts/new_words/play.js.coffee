@@ -38,7 +38,7 @@ $ ()->
           type: "delete"
           data: { id: new_word_id }
       rc $.post "/api/cards/add", word_id: word_id
-      rc $.ajax "/api/user/study_new_word", type: "patch"
+      rc $.ajax "/api/user/study_new_word", type: "post"
     
     idx += 1
     if idx < new_words_count

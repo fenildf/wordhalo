@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         render :json => { new_words: new_words, cards: cards }
     end
     
-    def api_study_new_word #patch
+    def api_study_new_word #post
         return head(401) if not signed_in? #:unauthorized
         
         current_user.study_new_word_count += 1
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
         head(200)
     end
     
-    def api_study_card #patch
+    def api_study_card #post
         return head(401) if not signed_in? #:unauthorized
         
         current_user.study_card_count += 1

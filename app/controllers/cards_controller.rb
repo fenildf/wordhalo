@@ -49,7 +49,7 @@ class CardsController < ApplicationController
         return render json: card, status: 200
     end
     
-    def api_new_schedule #patch
+    def api_new_schedule #post
         return head(401) if not signed_in? #:unauthorized
         id = params[:id]
         schedule = params[:schedule]

@@ -303,9 +303,9 @@ $ ()->
           data: { id: current_card.id }
       else
         rc $.ajax '/api/cards/schedule',
-          type: "patch"
+          type: "post"
           data: { id: current_card.id, schedule: param }
-      rc $.ajax "/api/user/study_card", type: "patch"
+      rc $.ajax "/api/user/study_card", type: "post"
       
       next_word()
   
